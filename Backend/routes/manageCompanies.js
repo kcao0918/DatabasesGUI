@@ -109,4 +109,46 @@ router.post("/addLocation", (req, res) => {
   });
 });
 
+/**
+ * HTTP Request for getting service ids.
+ */
+router.get("/services", (req, res) => {
+  query = "SELECT id FROM delivery_services";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+/**
+ * HTTP Request for getting businesses.
+ */
+router.get("/businesses", (req, res) => {
+  query = "SELECT long_name FROM businesses";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+/**
+ * HTTP Request for getting locations.
+ */
+router.get("/locations", (req, res) => {
+  query = "SELECT label FROM locations";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
 module.exports = router;

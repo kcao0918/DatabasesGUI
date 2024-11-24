@@ -67,4 +67,18 @@ router.delete("/removeProduct", (req, res) => {
   });
 });
 
+/**
+ * HTTP Request for getting products.
+ */
+router.get("/products", (req, res) => {
+  query = "SELECT barcode FROM products";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
 module.exports = router;

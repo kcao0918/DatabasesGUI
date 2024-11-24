@@ -161,4 +161,46 @@ router.delete("/removeDriver", (req, res) => {
     });
   });
 
+  /**
+ * HTTP Request for getting drivers.
+ */
+router.get("/drivers", (req, res) => {
+  query = "SELECT username FROM drivers";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+  /**
+ * HTTP Request for getting employees.
+ */
+  router.get("/employees", (req, res) => {
+    query = "SELECT username FROM employees";
+    connection.query(query, (err, result) => {
+      if (!err) {
+        return res.status(200).json(result);
+      } else {
+        return res.status(500).json(err);
+      }
+    });
+  });
+
+    /**
+ * HTTP Request for getting owners.
+ */
+router.get("/owners", (req, res) => {
+  query = "SELECT username FROM business_owners";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
 module.exports = router;
