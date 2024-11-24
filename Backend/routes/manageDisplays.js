@@ -5,20 +5,13 @@ const router = express.Router();
 require("dotenv").config();
 
 /**
- * HTTP Request for adding van.
+ * HTTP Request for getting owner view.
  */
-router.post("/addVan", (req, res) => {
-  let data = req.body;
-  // Makes skeleton query.
-  query =
-    "CALL add_owner(?, ?, ?, ?, ?, @outputMessage); SELECT @outputMessage AS message;";
-  input = [data.username, data.fname, data.lname, data.address, data.bdate];
-  connection.query(query, input, (err, results) => {
+router.get("/ownerView", (req, res) => {
+  query = "SELECT * FROM display_owner_view";
+  connection.query(query, (err, result) => {
     if (!err) {
-      const outputMessage = results[1][0].message;
-      return res.status(200).json({
-        message: outputMessage,
-      });
+      return res.status(200).json(result);
     } else {
       return res.status(500).json(err);
     }
@@ -26,15 +19,69 @@ router.post("/addVan", (req, res) => {
 });
 
 /**
- * HTTP Request for getting business information.
+ * HTTP Request for getting employee view.
  */
-router.get("/businessInfo", (req, res) => {
-  businessidnum = req.session.user.business.idnum;
-  // Finds all business information associated with business id in request session.
-  query = "SELECT * FROM business WHERE idnum = ?";
-  connection.query(query, [businessidnum], (err, result) => {
+router.get("/employeeView", (req, res) => {
+  query = "SELECT * FROM display_employee_view";
+  connection.query(query, (err, result) => {
     if (!err) {
-      return res.status(200).json(result[0]);
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+/**
+ * HTTP Request for getting driver view.
+ */
+router.get("/driverView", (req, res) => {
+  query = "SELECT * FROM display_driver_view";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+/**
+ * HTTP Request for getting location view.
+ */
+router.get("/locationView", (req, res) => {
+  query = "SELECT * FROM display_location_view";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+/**
+ * HTTP Request for getting product view.
+ */
+router.get("/productView", (req, res) => {
+  query = "SELECT * FROM display_product_view";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(500).json(err);
+    }
+  });
+});
+
+/**
+ * HTTP Request for getting service view.
+ */
+router.get("/serviceView", (req, res) => {
+  query = "SELECT * FROM display_service_view";
+  connection.query(query, (err, result) => {
+    if (!err) {
+      return res.status(200).json(result);
     } else {
       return res.status(500).json(err);
     }
