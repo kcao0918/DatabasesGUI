@@ -1,10 +1,8 @@
-import Navbar from "../components/NavBar";
 import { Link } from "react-router-dom";
 
 function Dashboard() {
   return (
     <div className="relative h-screen">
-      <Navbar />
       <div className="flex flex-col items-center justify-center h-full space-y-8">
         <h1 className="text-3xl font-bold text-black">
           Business Supply Management
