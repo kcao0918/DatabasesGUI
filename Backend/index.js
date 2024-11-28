@@ -9,8 +9,8 @@ const productRoute = require("./routes/manageProducts");
 const displayRoute = require("./routes/manageDisplays");
 
 const app = express();
-const session = require("express-session");
-const mysqlStore = require("express-mysql-session")(session);
+//const session = require("express-session");
+//const mysqlStore = require("express-mysql-session")(session);
 
 const IN_PROD = process.env.NODE_ENV === "production";
 const MAX_AGE = 1000 * 60 * 60 * 24 * 365;
@@ -23,7 +23,7 @@ const options = {
   createDatabaseTable: true,
 };
 
-const sessionStore = new mysqlStore(options);
+//const sessionStore = new mysqlStore(options);
 
 app.use(
   cors({
@@ -33,7 +33,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
+/*app.use(
   session({
     name: "Login-Sessions",
     store: sessionStore,
@@ -46,7 +46,7 @@ app.use(
       sameSite: true,
     },
   })
-);
+);*/
 
 app.use("/user", userRoute);
 app.use("/van", vanRoute);
