@@ -348,7 +348,7 @@ sp_main: begin
 	end if;
     
 	if ip_salary < 0 or ip_birthdate > ip_hired or ip_employee_experience < 0 then
-		set message = "";
+		set message = "Salary and/or experience negative / born after hire date.";
 		leave sp_main;
 	end if;
     
@@ -357,9 +357,10 @@ sp_main: begin
 		values(ip_username, ip_first_name, ip_last_name, ip_address, ip_birthdate);
         insert into employees (username, taxID, hired, experience, salary)
         values (ip_username, ip_taxID, ip_hired, ip_employee_experience, ip_salary);
-        set message = "";
+        set message = "Employee created.";
+		leave sp_main;
 	end if;
-
+	set message = "Employee with username / taxID already exists.";
     
 end //
 delimiter ;
@@ -381,7 +382,7 @@ sp_main: begin
 		set message = "Error: One or more input parameters are NULL.";
 		leave sp_main;
 	end if;
-	if ip_driver_experience < 0 then set message = ""; leave sp_main; end if;
+	if ip_driver_experience < 0 then set message = "Driver experience is negative."; leave sp_main; end if;
     
     if ip_username in (select username from employees) 
     and ip_username not in (select username from workers) 
@@ -390,12 +391,11 @@ sp_main: begin
     then
 		insert into drivers (username, licenseID, license_type, successful_trips)
         values (ip_username, ip_licenseID, ip_license_type, ip_driver_experience);
-        set message = "";
+        set message = "Driver role added to employee.";
 	else
-		set message = "";
+		set message = "User not an employee / a worker / already a driver.";
 		leave sp_main;
     end if;
-    
 end //
 delimiter ;
 
@@ -414,9 +414,9 @@ sp_main: begin
     and ip_username not in (select username from workers)
     then
 		insert into workers (username) values (ip_username);
-        set message = "";
+        set message = "Worker role added to employee.";
 	else
-		set message = "";
+		set message = "User not an employee / a driver / already a worker.";
 		leave sp_main;
 	end if;
 end //
@@ -438,9 +438,9 @@ sp_main: begin
     
 	if ip_barcode not in (select barcode from products) then
 		insert into products (barcode, iname, weight) values (ip_barcode, ip_name, ip_weight);
-        set message = "";
+        set message = "Product added.";
 	else
-		set message = "";
+		set message = "Barcode already exists.";
 		leave sp_main;
 	end if;
 end //
@@ -471,14 +471,14 @@ sp_main: begin
     if ip_capacity < 0 or ip_sales < 0 or ip_fuel < 0 then set message = ""; leave sp_main; end if;
     
     if ip_id not in (select id from delivery_services) then -- not valid delivery service
-		set message = "";
+		set message = "Delivery service does not exist.";
 		leave sp_main;
         end if;
     
 	if exists(select * from vans v where v.id = ip_id and v.tag = ip_tag) then set message = ""; leave sp_main; end if;
 
     if ip_driven_by not in (select username from drivers) then 
-		set message = "";
+		set message = "Driver not found.";
 		leave sp_main;
         end if;
         
@@ -486,8 +486,7 @@ sp_main: begin
 	
 	insert into vans (id, tag, fuel, capacity, sales, driven_by, located_at) 
 	values (ip_id, ip_tag, ip_fuel, ip_capacity, ip_sales, ip_driven_by, ip_located_at);
-    set message = "";
-        
+    set message = "Van added to service.";
 end //
 delimiter ;
 
@@ -512,9 +511,15 @@ sp_main: begin
     if ip_long_name is null or ip_rating is null or ip_spent is null or ip_location is null then leave sp_main; end if;
     if (ip_spent is null) then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
-	if ip_location in (select location from businesses where ip_location = location) then set message = ""; leave sp_main; end if;
+	if ip_location in (select location from businesses where ip_location = location) then
+		set message = "A business already in location."; 
+		leave sp_main; 
+	end if;
 	
-    if ip_location in (select home_base from delivery_services where ip_location = home_base) then set message = ""; leave sp_main; end if;
+    if ip_location in (select home_base from delivery_services where ip_location = home_base) then 
+		set message = "A service already in location."; 
+		leave sp_main; 
+	end if;
     
     
     select count(*) into isBusiness
@@ -528,9 +533,10 @@ sp_main: begin
     if isBusiness = 0 and isLocation != 0 and (ip_rating >= 1 and ip_rating <= 5) then
 		insert into businesses (long_name, rating, spent, location)
         values (ip_long_name, ip_rating, ip_spent, ip_location);
-        set message = "";
+        set message = "Business added.";
+		leave sp_main;
 	end if;
-    set message = "";
+    set message = "Business already exists / Location not found / Rating invalid";
 end //
 delimiter ;
 
@@ -550,23 +556,34 @@ sp_main: begin
 	if ip_id is null or ip_long_name is null or ip_home_base is null or ip_manager is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
 	if ip_id in (select id from delivery_services) then
-		set message = "";
+		set message = "Service id already exists";
 		leave sp_main;
 	end if;
     
     if ip_home_base not in (select label from locations) then
-		set message = "";
+		set message = "Location not found";
 		leave sp_main;
 	end if;
     
     if ip_manager not in (select username from workers) then
-		set message = "";
+		set message = "Manager not a worker";
+		leave sp_main;
+	end if;
+
+	if ip_manager in (select username from work_for) then
+		set message = "Manager already a worker";
 		leave sp_main;
 	end if;
     
-    if ip_home_base in (select location from businesses where ip_home_base = location) then set message = ""; leave sp_main; end if;
+    if ip_home_base in (select location from businesses where ip_home_base = location) then
+		set message = "A business already in location."; 
+		leave sp_main; 
+	end if;
 	
-    if ip_home_base in (select home_base from delivery_services where ip_home_base = home_base) then set message = ""; leave sp_main; end if;
+    if ip_home_base in (select home_base from delivery_services where ip_home_base = home_base) then 
+		set message = "A service already in location."; 
+		leave sp_main; 
+	end if;
 
     insert into delivery_services (id, long_name, home_base, manager)
     values (ip_id, ip_long_name, ip_home_base, ip_manager);
@@ -574,7 +591,7 @@ sp_main: begin
     insert into work_for (username , id)
     values (ip_manager, ip_id);
     
-    set message = "";
+    set message = "Service with manager created.";
 end //
 delimiter ;
 
@@ -595,17 +612,17 @@ sp_main: begin
     if ip_space is not null and ip_space < 0 then set message = ""; leave sp_main; end if;
     
 	if ip_label in (select label from locations) then
-		set message = "";
+		set message = "Location name already exists";
 		leave sp_main;
 	end if;
     
 	if (select count(*) from locations where x_coord = ip_x_coord and y_coord = ip_y_coord) > 0 then
-		set message = "";
+		set message = "Location with cords already exists";
 		leave sp_main;
 	end if;
     
     insert into locations (label, x_coord, y_coord, space) values (ip_label, ip_x_coord, ip_y_coord, ip_space);
-    set message = "";
+    set message = "Location added.";
     
 end //
 delimiter ;
@@ -626,15 +643,15 @@ sp_main: begin
     if ip_amount is not null and ip_amount < 0 then set message = ""; leave sp_main; end if;
     
 	if ip_owner not in (select username from business_owners) then
-		set message = "";
+		set message = "User not a owner.";
 		leave sp_main;
 	elseif ip_long_name not in (select long_name from businesses) then
-		set message = "";
+		set message = "Business not found.";
 		leave sp_main;
     end if;
     
     insert into fund (username, invested, invested_date, business) values (ip_owner, ip_amount, ip_fund_date, ip_long_name);
-    set message = "";
+    set message = "Funding added.";
     
 end //
 delimiter ;
@@ -655,24 +672,30 @@ sp_main: begin
     if ip_username is null or ip_id is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
 	if ip_username not in (select username from employees) then
-		set message = "";
+		set message = "User not an employee";
 		leave sp_main; end if;
         
-	if ip_username not in (select username from workers) then set message = ""; leave sp_main; end if;
-    
-	if ip_id not in (select id from delivery_services) then
-		set message = "";
-		leave sp_main; end if;
-	if ip_username in (select manager from delivery_services where id != ip_id) then -- ensure that the employee isn't a manager for another service
-		set message = "";
-        leave sp_main; end if;
-	if ip_username in (select username from work_for where id = ip_id) then -- ensure that the employee hasn't already been hired by that service
-		set message = "";
-        leave sp_main;
+	if ip_username not in (select username from workers) then set 
+		message = "User does not have worker role"; 
+		leave sp_main; 
 	end if;
     
+	if ip_id not in (select id from delivery_services) then
+		set message = "Service not found";
+		leave sp_main; 
+	end if;
+	if ip_username in (select username from work_for where id = ip_id) then -- ensure that the employee hasn't already been hired by that service
+		set message = "Employee already hired";
+        leave sp_main;
+	end if;
+	if ip_username in (select manager from delivery_services where id != ip_id) then -- ensure that the employee isn't a manager for another service
+		set message = "Employee manager for a service";
+        leave sp_main; 
+	end if;
+	
+    
     insert into work_for (username, id) values (ip_username, ip_id);
-    set message = "";
+    set message = "Employee hired";
 end //
 delimiter ;
 
@@ -691,18 +714,21 @@ sp_main: begin
     if ip_username is null or ip_id is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
 	if ip_username not in (select username from work_for where ip_id = id) then
-		set message = "";
+		set message = "Employee not a worker for service";
 		leave sp_main; end if;
 	
     if ip_username in (select manager from delivery_services where ip_id = id) then
-		set message = "";
+		set message = "Cannot fire manager of service";
 		leave sp_main;
 	end if;
     
-    if (select count(username) from work_for where id = ip_id) < 2 then set message = ""; leave sp_main; end if;
+    if (select count(username) from work_for where id = ip_id) < 2 then 
+		set message = "This is the last employee."; 
+		leave sp_main; 
+	end if;
     
     delete from work_for w where w.username = ip_username and w.id = ip_id;
-    set message = "";
+    set message = "Employee fired.";
 end //
 delimiter ;
 
@@ -721,18 +747,18 @@ sp_main: begin
     -- ensure that the employee isn't working for any other services
     if ip_username is null or ip_id is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
-	if ip_username in (select username from work_for where ip_id != id) then
-		set message = "";
-		leave sp_main;
-	end if;
 	if ip_username not in (select username from workers) then
-		set message = ""; set message = ""; leave sp_main;
+		set message = "User not a worker"; leave sp_main;
+	end if;
+	if ip_username in (select username from work_for where ip_id != id) then
+		set message = "Worker works for other services.";
+		leave sp_main;
 	end if;
     
 	update delivery_services
     set manager = ip_username
     where id = ip_id;
-    
+    set message = "Worker new manager for service";
 end //
 delimiter ;
 
@@ -758,17 +784,18 @@ sp_main: begin
 		    update vans v
 			set driven_by = null
 			where v.tag = ip_tag and v.id = ip_id;
-			set message = ""; leave sp_main;
+			set message = "Van has no driver"; leave sp_main;
 	end if;
     
-    if exists (select 1 from vans where driven_by=ip_username and ip_id!=id) > 0 then set message = ""; leave sp_main; end if;
+	-- ensure that the employee is a valid driver
+    if ip_username not in (select username from drivers) then set message = "User not a driver"; leave sp_main; end if;
+    if exists (select 1 from vans where driven_by=ip_username and ip_id!=id) > 0 then set message = "Driver driving another van"; leave sp_main; end if;
     -- ensure that the selected van is owned by the same service
-    -- ensure that the employee is a valid driver
-    if ip_username not in (select username from drivers) then set message = ""; leave sp_main; end if;
 	
     update vans v
     set driven_by = ip_username
     where v.tag = ip_tag and v.id = ip_id;
+	set message = "Van has a driver";
     
 end //
 delimiter ;
@@ -801,14 +828,14 @@ sp_main: begin
     
     if not exists (select 1 from vans where ip_id = id and ip_tag = tag) then set message = ""; leave sp_main;
 	elseif ip_barcode not in (select barcode from products) then -- ensure that the product is valid
-		set message = ""; leave sp_main;
+		set message = "Barcode not found"; leave sp_main;
 	elseif (select located_at from vans where tag = ip_tag and id = ip_id) != (select home_base from delivery_services where id = ip_id) then -- ensure that the van is located at the service home base
-		set message = ""; leave sp_main;
+		set message = "Van not at service home base"; leave sp_main;
     elseif ip_more_packages <= 0 then -- ensure that the quantity of new packages is greater than zero
-		set message = ""; leave sp_main;
+		set message = "Packages negative"; leave sp_main;
 	elseif ((select count(*) from contain where id = ip_id and tag = ip_tag) + 1) > (select capacity from vans where id = ip_id and tag = ip_tag) 
 		then -- ensure that the van has sufficient capacity to carry the new packages
-		set message = ""; leave sp_main;
+		set message = "Not enough space in van"; leave sp_main;
     end if;
     
 	if ip_barcode in (select barcode from contain where tag = ip_tag and id = ip_tag) then
@@ -818,6 +845,7 @@ sp_main: begin
 	else
 		insert into contain (id, tag, barcode, quantity, price) values (ip_id, ip_tag, ip_barcode, ip_more_packages, ip_price);
     end if;
+	set message = "Product loaded onto van.";
     
 end //
 delimiter ;
@@ -837,16 +865,16 @@ sp_main: begin
     
     -- ensure that the van is located at the service home base
     if ip_tag not in (select tag from vans where id = ip_id) then
-		set message = ""; leave sp_main;
+		set message = "Van not found"; leave sp_main;
 	-- ensure that the van is located at the service home base
 	elseif (select located_at from vans where id = ip_id and tag = ip_tag) not in (select home_base from delivery_services where id = ip_id) then
-		set message = ""; leave sp_main;
+		set message = "Van not at service home base"; leave sp_main;
 	end if;
 
     update vans
     set fuel = fuel + ip_more_fuel
     where tag = ip_tag and id = ip_id;
-    
+    set message = "Van refueled";
 end //
 delimiter ;
 
@@ -885,26 +913,27 @@ sp_main: begin
     if ip_id is null or ip_tag is null or ip_destination is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
 	-- if tag isnt a valid van
 	if not exists (select 1 from vans where id = ip_id and tag = ip_tag) then
-		set message = ""; leave sp_main;
+		set message = "Van not found"; leave sp_main;
 	-- if id isn't for a valid delivery service
     elseif ip_id not in (select id from delivery_services) then
-		set message = ""; leave sp_main;
+		set message = "Service not found"; leave sp_main;
 	-- ensure that the destination is a valid location
 	elseif ip_destination not in (select label from locations) then
-		set message = ""; leave sp_main;
+		set message = "Destination not found"; leave sp_main;
     -- ensure that the van isn't already at the location
     elseif (select located_at from vans where id = ip_id and ip_tag = tag) = ip_destination then
-		set message = ""; leave sp_main;
+		set message = "Van already at destination"; leave sp_main;
     -- ensure that the van has enough fuel to reach the destination and (then) home base
     elseif (select fuel from vans where id = ip_id and tag = ip_tag) <= 
     (fuel_required((select located_at from vans where id = ip_id and tag = ip_tag), ip_destination) + 
     fuel_required(ip_destination, (select home_base from delivery_services where id = ip_id))) then
-		set message = ""; leave sp_main;
+		set message = "Not enough fuel"; leave sp_main;
     -- ensure that the van has enough space at the destination for the trip
     elseif ((select space from locations where label = ip_destination) - (select count(*) from vans where located_at = ip_destination)) < 1 then
-		set message = ""; leave sp_main;
+		set message = "Not enoguh space at destination"; leave sp_main;
 	-- 	ensure van has driver
-	else if (select driven_by from vans where id = ip_id and tag = ip_tag) is null then set message = ""; leave sp_main; end if; 
+	else if (select driven_by from vans where id = ip_id and tag = ip_tag) is null then 
+		set message = "Van had no driver"; leave sp_main; end if; 
 	end if;
     
     set currentlyAt = (select located_at from vans where id = ip_id and tag = ip_tag);
@@ -918,6 +947,8 @@ sp_main: begin
     update drivers
     set successful_trips = successful_trips + 1
     where username in (select driven_by from vans where tag = ip_tag and id = ip_id);
+
+	set message = "Van driven to destination";
     
 end //
 delimiter ;
@@ -946,24 +977,24 @@ sp_main: begin
     declare totalCostOfQuantity integer;
     
     if ip_long_name is null or ip_id is null or ip_tag is null or ip_barcode is null or ip_quantity is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
-	if ip_quantity <= 0 then set message = ""; leave sp_main; end if;
+	if ip_quantity <= 0 then set message = "Purchase quantity negative"; leave sp_main; end if;
     
     -- make sure there is at least one instance of barcode, tag, and id in contain
     if (select count(*) from contain where barcode = ip_barcode and tag = ip_tag and id = ip_id) < 1 then
-		set message = ""; leave sp_main;
+		set message = "Van does not have product"; leave sp_main;
 	end if;
 	-- ensure that the business is valid
     if ip_long_name not in (select long_name from businesses) then
-		set message = ""; leave sp_main;
+		set message = "Business not found"; leave sp_main;
 	end if;
     -- ensure that the van is valid and exists at the business's location
     if not exists (select 1 from vans where id = ip_id and tag = ip_tag)
     or ((select located_at from vans where id = ip_id and tag = ip_tag) != (select location from businesses where long_name = ip_long_name)) then
-		set message = ""; leave sp_main;
+		set message = "Can not at business location"; leave sp_main;
 	end if;
 	-- ensure that the van has enough of the requested product
     if (select quantity from contain where barcode = ip_barcode and id = ip_id and tag = ip_tag) < ip_quantity then
-		set message = ""; leave sp_main;
+		set message = "Not enough of requested product in van"; leave sp_main;
 	end if;
     
     -- assuming its quantity * cost
@@ -985,6 +1016,8 @@ sp_main: begin
     
     delete from contain
     where quantity <= 0;
+
+	set message = "Product purchased bu business from van";
     
 end //
 delimiter ;
@@ -1004,12 +1037,13 @@ sp_main: begin
 	if ip_barcode is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
 	if ip_barcode not in (select barcode from products) then
-		set message = ""; leave sp_main;
+		set message = "Barcode not found"; leave sp_main;
 	elseif ip_barcode in (select barcode from contain) then -- ensure that the product is not being carried by any vans
-		set message = ""; leave sp_main;
+		set message = "Product being carried in some vans"; leave sp_main;
     end if;
     
     delete from products where barcode = ip_barcode;
+	set message = "Product removed";
     
 end //
 delimiter ;
@@ -1029,14 +1063,14 @@ sp_main: begin
 	if ip_id is null or ip_tag is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
     if not exists (select 1 from vans where id = ip_id and ip_tag = ip_tag) then
-		set message = ""; leave sp_main;
+		set message = "Van not found"; leave sp_main;
 	-- elseif ((select sum(quantity) from contain where id = ip_id and tag = ip_tag) > 0) ERRORMAYBE still carrying products, -- ensure that the van is not carrying any products
     elseif ((select count(*) from contain where id = ip_id and tag = ip_tag) > 0) then -- in contains;
-		set message = ""; leave sp_main;
+		set message = "Van carrying products"; leave sp_main;
 	end if;
     
     delete from vans where tag = ip_tag and id = ip_id;
-    -- no idea if i need: delete from contains where where tag = ip_tag and id = ip_id
+    set message = "Van removed";
 end //
 delimiter ;
 
@@ -1056,18 +1090,17 @@ sp_main: begin
     if ip_username is null then set message = "Error: One or more input parameters are NULL."; set message = ""; leave sp_main; end if;
     
 	if ip_username not in (select username from drivers) then
-		set message = ""; leave sp_main;
+		set message = "Driver not found"; leave sp_main;
 	-- ensure that the driver is not controlling any vans
 	elseif (select count(*) from vans where driven_by = ip_username) > 0 then
-		set message = ""; leave sp_main;
+		set message = "Driver currently driving a van"; leave sp_main;
 	end if;
     
     
 	delete from drivers where username = ip_username;
 	delete from employees where username = ip_username;
     delete from users where username = ip_username;
-
-
+	set message = "Driver removed";
 end //
 delimiter ;
 
