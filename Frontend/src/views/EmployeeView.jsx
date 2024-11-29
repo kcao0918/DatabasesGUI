@@ -36,7 +36,7 @@ const EmployeeView = () => {
                   <th className="px-4 py-2 text-center border border-gray-300">Salary</th>
                   <th className="px-4 py-2 text-center border border-gray-300">Hired</th>
                   <th className="px-4 py-2 text-center border border-gray-300">Employee Experience</th>
-                  <th className="px-4 py-2 text-center border border-gray-300">license ID</th>
+                  <th className="px-4 py-2 text-center border border-gray-300">License ID</th>
                   <th className="px-4 py-2 text-center border border-gray-300">Driving Experience</th>
                   <th className="px-4 py-2 text-center border border-gray-300">Manager</th>
                 </tr>
