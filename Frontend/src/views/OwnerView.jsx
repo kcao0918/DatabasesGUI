@@ -28,7 +28,7 @@ const OwnerView = () => {
   
         <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg shadow-md overflow-auto p-4">
           {view && view.length > 0 ? (
-            <table className="min-w-full table-auto border border-gray-300">
+            <table className="min-w-full table-auto border text-center border-gray-300">
               <thead className="bg-gray-200">
                 <tr>
                   <th className="px-4 py-2 text-center border border-gray-300">Username</th>
