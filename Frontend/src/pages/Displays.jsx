@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Displays = () => {
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen bg-[#F3F1E5]">
       <div className="flex flex-col items-center justify-center h-full space-y-8">
         <h1 className="text-3xl font-bold text-black">TABLE DISPLAYS</h1>
         <div className="grid grid-cols-2 gap-8">

@@ -1,6 +1,6 @@
 const RemoveDriver = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-[#F3F1E5]">
       <div className="h-1/3 w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
         <h1 className="text-2xl font-bold mb-4">REMOVE_DRIVER_ROLE()</h1>
 

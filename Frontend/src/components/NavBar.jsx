@@ -4,19 +4,12 @@ import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu";
 import { cn } from "@/lib/utils";
 
 function Navbar({ className }) {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState("Dashboard");
 
   return (
-    <div
-      className={cn("fixed top-5 inset-x-0 max-w-4xl mx-auto z-50", className)}
-    >
+    <div className={cn("fixed inset-x-0 mx-auto z-50", className)}>
       <Menu setActive={setActive}>
-        <MenuItem
-          setActive={setActive}
-          active={active}
-          item="Dashboard"
-          loc="/dashboard"
-        ></MenuItem>
+        <MenuItem item="Dashboard" loc="/dashboard" />
         <MenuItem
           setActive={setActive}
           active={active}
