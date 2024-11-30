@@ -1,12 +1,13 @@
 import { useState } from "react";
+import axios from "axios";
 
 const AddDriver = () => {
   // Step 1: Define the array of requirements
   const requirements = [
     { id: "username", label: "Username", type: "text", value: "" },
-    { id: "driverLicense", label: "Driver's License", type: "text", value: "" },
+    { id: "licenseID", label: "Driver's License", type: "text", value: "" },
     {
-      id: "drivingExperience",
+      id: "experience",
       label: "Driving Experience (in years)",
       type: "number",
       value: "",
@@ -39,6 +40,28 @@ const AddDriver = () => {
         return acc;
       }, {})
     );
+  };
+
+  // Handles submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(inputs);
+      // Checks if all inputs are given
+      if (Object.values(inputs).some(value => value === '')) {
+        return;
+      }
+      // Makes request
+      const response = await axios.post(
+        "http://localhost:8080/user/addDriver",
+        inputs
+      );
+
+      // Prints message on console. TODO: Display
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
   };
 
   return (
@@ -74,7 +97,9 @@ const AddDriver = () => {
           >
             CLEAR
           </button>
-          <button className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+          <button 
+            onClick={handleSubmit} // Call handleSubmit when clicked
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
             CONFIRM
           </button>
         </div>
