@@ -1,4 +1,3 @@
-
 -- CS4400: Introduction to Database Systems (Fall 2024)
 -- Project Phase II: Database Schema SOLUTION [v0] Monday, Oct 21, 2024
 set global transaction isolation level serializable;

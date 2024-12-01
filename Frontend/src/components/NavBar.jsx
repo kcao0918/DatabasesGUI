@@ -9,7 +9,12 @@ function Navbar({ className }) {
   return (
     <div className={cn("fixed inset-x-0 mx-auto z-50", className)}>
       <Menu setActive={setActive}>
-        <MenuItem item="Dashboard" loc="/dashboard" />
+        <MenuItem
+          setActive={setActive}
+          active={null}
+          item="Dashboard"
+          loc="/dashboard"
+        />
         <MenuItem
           setActive={setActive}
           active={active}

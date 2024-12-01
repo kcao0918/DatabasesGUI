@@ -22,7 +22,7 @@ const DriverView = () => {
   };
 
   return (
-    <div className="mt-40 flex justify-center min-h-screen bg-white">
+    <div className="pt-40 flex justify-center min-h-screen bg-white">
       <div className="h-4/5 w-3/4 p-6 rounded-lg border border-black bg-white text-black shadow-lg overflow-hidden">
         <h1 className="text-2xl font-bold mb-4 text-center">Driver View</h1>
   

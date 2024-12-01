@@ -22,7 +22,7 @@ const EmployeeView = () => {
   };
 
   return (
-    <div className="mt-40 flex justify-center min-h-screen bg-white">
+    <div className="pt-40 flex justify-center min-h-screen bg-white">
       <div className="h-4/5 w-3/4 p-6 rounded-lg border border-black bg-white text-black shadow-lg overflow-hidden">
         <h1 className="text-2xl font-bold mb-4 text-center">Employee View</h1>
   
@@ -47,7 +47,7 @@ const EmployeeView = () => {
                     <td className="px-4 py-2 border border-gray-300">{data.username}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.taxID}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.salary}</td>
-                    <td className="px-4 py-2 border border-gray-300">{data.hired}</td>
+                    <td className="px-4 py-2 border border-gray-300">{data.hired.split('T')[0]}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.employee_experience}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.licenseID}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.driving_experience}</td>
