@@ -10,9 +10,10 @@ const AddEmployee = () => {
       type: "number",
       value: "",
     },
+    { id: "taxID", label: "Tax ID", type: "number", value: "" },
     { id: "fname", label: "First Name", type: "text", value: "" },
     { id: "lname", label: "Last Name", type: "text", value: "" },
-    { id: "hiredDate", label: "Hired Date", type: "text", value: "" },
+    { id: "hired", label: "Hired Date", type: "text", value: "" },
     { id: "address", label: "Address", type: "text", value: "" },
   ];
 
