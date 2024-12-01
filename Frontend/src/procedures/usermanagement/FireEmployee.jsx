@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+
 const FireEmployee = () => {
   const requirements = [
     { id: "username", label: "Username", type: "text", value: "" },
@@ -42,9 +44,9 @@ const FireEmployee = () => {
         return;
       }
       // Makes request
-      const response = await axios.post(
+      const response = await axios.delete(
         "http://localhost:8080/user/fireEmployee",
-        inputs
+        { data: inputs }
       );
 
       // Prints message on console. TODO: Display
@@ -87,7 +89,9 @@ const FireEmployee = () => {
           >
             CLEAR
           </button>
-          <button className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+          <button 
+            onClick={handleSubmit} // Call handleSubmit when clicked
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
             CONFIRM
           </button>
         </div>

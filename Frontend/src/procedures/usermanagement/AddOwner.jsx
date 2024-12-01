@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const AddOwner = () => {
   // Step 1: Define the array of requirements
@@ -37,6 +38,28 @@ const AddOwner = () => {
     );
   };
 
+  // Handles submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(inputs);
+      // Checks if all inputs are given
+      if (Object.values(inputs).some((value) => value === "")) {
+        return;
+      }
+      // Makes request
+      const response = await axios.post(
+        "http://localhost:8080/user/addOwner",
+        inputs
+      );
+
+      // Prints message on console. TODO: Display
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center h-screen bg-[#F3F1E5]">
       <div className="h-3/3 w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
@@ -70,7 +93,9 @@ const AddOwner = () => {
           >
             CLEAR
           </button>
-          <button className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+          <button 
+            onClick={handleSubmit} // Call handleSubmit when clicked
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
             CONFIRM
           </button>
         </div>

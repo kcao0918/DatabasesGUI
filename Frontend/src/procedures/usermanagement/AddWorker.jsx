@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const AddWorker = () => {
   const requirements = [
@@ -85,7 +86,9 @@ const AddWorker = () => {
           >
             CLEAR
           </button>
-          <button className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+          <button 
+            onClick={handleSubmit} // Call handleSubmit when clicked
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
             CONFIRM
           </button>
         </div>

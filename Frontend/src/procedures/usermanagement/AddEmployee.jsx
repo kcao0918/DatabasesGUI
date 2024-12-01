@@ -1,20 +1,27 @@
 import { useState } from "react";
+import axios from "axios";
 
 const AddEmployee = () => {
   const requirements = [
     { id: "username", label: "Username", type: "text", value: "" },
+    { id: "taxID", label: "Tax ID", type: "text", value: "" },
+    { id: "fname", label: "First Name", type: "text", value: "" },
+    { id: "lname", label: "Last Name", type: "text", value: "" },
     { id: "bdate", label: "Birthday", type: "text", value: "" },
+    { id: "address", label: "Address", type: "text", value: "" },
+    { id: "hired", label: "Hired Date", type: "text", value: "" },
+    {
+      id: "experience",
+      label: "Work Experience (in years)",
+      type: "number",
+      value: "",
+    },
     {
       id: "salary",
       label: "Salary",
       type: "number",
       value: "",
     },
-    { id: "taxID", label: "Tax ID", type: "number", value: "" },
-    { id: "fname", label: "First Name", type: "text", value: "" },
-    { id: "lname", label: "Last Name", type: "text", value: "" },
-    { id: "hired", label: "Hired Date", type: "text", value: "" },
-    { id: "address", label: "Address", type: "text", value: "" },
   ];
 
   // Step 2: Initialize state dynamically for each input field
@@ -42,6 +49,28 @@ const AddEmployee = () => {
         return acc;
       }, {})
     );
+  };
+
+  // Handles submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(inputs);
+      // Checks if all inputs are given
+      if (Object.values(inputs).some((value) => value === "")) {
+        return;
+      }
+      // Makes request
+      const response = await axios.post(
+        "http://localhost:8080/user/addEmployee",
+        inputs
+      );
+
+      // Prints message on console. TODO: Display
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
   };
 
   return (
@@ -76,7 +105,10 @@ const AddEmployee = () => {
           >
             CLEAR
           </button>
-          <button className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+          <button
+            onClick={handleSubmit} // Call handleSubmit when clicked
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500"
+          >
             CONFIRM
           </button>
         </div>

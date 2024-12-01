@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+
 const RemoveDriver = () => {
   const requirements = [
     { id: "username", label: "Username", type: "text", value: "" },
@@ -41,9 +43,9 @@ const RemoveDriver = () => {
         return;
       }
       // Makes request
-      const response = await axios.post(
+      const response = await axios.delete(
         "http://localhost:8080/user/removeDriver",
-        inputs
+        { data: inputs }
       );
 
       // Prints message on console. TODO: Display
@@ -80,10 +82,14 @@ const RemoveDriver = () => {
         ))}
 
         <div className="flex justify-between">
-          <button className="font-semibold px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-gray-600 duration-500">
+          <button 
+            onClick={handleClear}
+            className="font-semibold px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-gray-600 duration-500">
             CLEAR
           </button>
-          <button className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+          <button 
+            onClick={handleSubmit} // Call handleSubmit when clicked
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
             CONFIRM
           </button>
         </div>

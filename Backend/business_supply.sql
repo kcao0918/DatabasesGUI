@@ -314,14 +314,11 @@ sp_main: begin
     -- ensure new owner has a unique username
     if ip_username not in (select username from users) then 
 		insert into users values(ip_username, ip_first_name, ip_last_name, ip_address, ip_birthdate); 
-	end if;
-    
-    if ip_username not in (select username from business_owners) then
 		insert into business_owners value(ip_username);
         set message = "Business Owner created.";
         leave sp_main;
 	end if;
-    set message = "User already a business owner.";
+    set message = "Username already exists.";
 end //
 delimiter ;
 
