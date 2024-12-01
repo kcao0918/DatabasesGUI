@@ -48,7 +48,7 @@ const AddDriver = () => {
     try {
       console.log(inputs);
       // Checks if all inputs are given
-      if (Object.values(inputs).some(value => value === '')) {
+      if (Object.values(inputs).some((value) => value === "")) {
         return;
       }
       // Makes request
@@ -97,9 +97,10 @@ const AddDriver = () => {
           >
             CLEAR
           </button>
-          <button 
+          <button
             onClick={handleSubmit} // Call handleSubmit when clicked
-            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500"
+          >
             CONFIRM
           </button>
         </div>
