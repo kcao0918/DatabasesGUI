@@ -48,7 +48,7 @@ const AddDriver = () => {
     try {
       console.log(inputs);
       // Checks if all inputs are given
-      if (Object.values(inputs).some(value => value === '')) {
+      if (Object.values(inputs).some((value) => value === "")) {
         return;
       }
       // Makes request
@@ -66,11 +66,7 @@ const AddDriver = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-[#F3F1E5]">
-<<<<<<< HEAD
-      <div className="w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)] ">
-=======
       <div className="h-3/3 w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
->>>>>>> 0bd0de0ba2e4255b99327da7d24f8d40ac95d011
         <h1 className="text-2xl font-bold mb-4">ADD_DRIVER()</h1>
 
         {requirements.map((req) => (
@@ -101,9 +97,10 @@ const AddDriver = () => {
           >
             CLEAR
           </button>
-          <button 
+          <button
             onClick={handleSubmit} // Call handleSubmit when clicked
-            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500"
+          >
             CONFIRM
           </button>
         </div>
