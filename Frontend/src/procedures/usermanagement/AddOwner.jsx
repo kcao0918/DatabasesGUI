@@ -1,42 +1,67 @@
 import { useState } from "react";
 
 const AddOwner = () => {
-  const [username, setUsername] = useState("");
+  // Step 1: Define the array of requirements
+  const requirements = [
+    { id: "username", label: "Username", type: "text", value: "" },
+    { id: "bdate", label: "Birthday", type: "text", value: "" },
+    { id: "fname", label: "First Name", type: "text", value: "" },
+    { id: "lname", label: "Last Name", type: "text", value: "" },
+    { id: "address", label: "Address", type: "text", value: "" },
+  ];
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  // Step 2: Initialize state dynamically for each input field
+  const [inputs, setInputs] = useState(
+    requirements.reduce((acc, req) => {
+      acc[req.id] = req.value;
+      return acc;
+    }, {})
+  );
+
+  // Step 3: Handle input change
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      [id]: value,
+    }));
   };
 
+  // Step 4: Handle form submission or clear action
   const handleClear = () => {
-    setUsername(""); // Resets input field value to empty string
+    setInputs(
+      requirements.reduce((acc, req) => {
+        acc[req.id] = "";
+        return acc;
+      }, {})
+    );
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-[#F3F1E5]">
-      <div className="h-1/3 w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
+    <div className="flex justify-center items-center bg-[#F3F1E5]">
+      <div className="w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
         <h1 className="text-2xl font-bold mb-4">ADD_OWNER()</h1>
 
-        <div className="mb-6">
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            username
-          </label>
-          <div className="flex items-center border rounded-md">
-            <input
-              id="addusername" // Updated id to match what you requested
-              type="text"
-              value={username} // Step 3: Bind input value to state
-              onChange={handleUsernameChange} // Step 4: Handle input change
-              placeholder="Add username here..."
-              className="w-full px-3 py-2 bg-gray-100 text-gray-700 border-none focus:outline-none focus:ring-0"
-            />
-            <button className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-r-md">
-              ▼
-            </button>
+        {requirements.map((req) => (
+          <div key={req.id} className="mb-6">
+            <label
+              htmlFor={req.id}
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              {req.label}
+            </label>
+            <div className="flex items-center border rounded-md">
+              <input
+                id={req.id}
+                type={req.type}
+                value={inputs[req.id]} // Bind the input value to the state
+                onChange={handleInputChange} // Handle input change
+                placeholder={`Enter ${req.label.toLowerCase()}`}
+                className="w-full px-3 py-2 bg-gray-100 text-gray-700 border-none focus:outline-none focus:ring-0"
+              />
+            </div>
           </div>
-        </div>
+        ))}
 
         <div className="flex justify-between">
           <button
