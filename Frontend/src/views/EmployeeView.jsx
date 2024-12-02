@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { procedurePagesCss } from "../lib/css";
 
 const EmployeeView = () => {
   const [view, setView] = useState();
@@ -22,8 +23,8 @@ const EmployeeView = () => {
   };
 
   return (
-    <div className="mt-40 flex justify-center min-h-screen bg-white">
-      <div className="h-4/5 w-3/4 p-6 rounded-lg border border-black bg-white text-black shadow-lg overflow-hidden">
+    <div className={procedurePagesCss}>
+      <div className="h-5/5 w-3/4 p-6 rounded-lg border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)] overflow-hidden">
         <h1 className="text-2xl font-bold mb-4 text-center">Employee View</h1>
   
         <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg shadow-md overflow-auto p-4">
@@ -47,7 +48,7 @@ const EmployeeView = () => {
                     <td className="px-4 py-2 border border-gray-300">{data.username}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.taxID}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.salary}</td>
-                    <td className="px-4 py-2 border border-gray-300">{data.hired}</td>
+                    <td className="px-4 py-2 border border-gray-300">{data.hired.split('T')[0]}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.employee_experience}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.licenseID}</td>
                     <td className="px-4 py-2 border border-gray-300">{data.driving_experience}</td>

@@ -32,7 +32,7 @@ import {
 
 import {
   AddVan,
-  DriverVan,
+  DriveVan,
   LoadVan,
   RefuelVan,
   RemoveVan,
@@ -85,7 +85,7 @@ function App() {
 
           {/* Van Mangement */}
           <Route path="/addvan" element={<AddVan />} />
-          <Route path="/drivervan" element={<DriverVan />} />
+          <Route path="/drivevan" element={<DriveVan />} />
           <Route path="/loadvan" element={<LoadVan />} />
           <Route path="/refuelvan" element={<RefuelVan />} />
           <Route path="/removevan" element={<RemoveVan />} />

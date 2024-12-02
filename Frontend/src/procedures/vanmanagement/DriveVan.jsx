@@ -2,13 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import { procedurePagesCss } from "../../lib/css";
 
-const LoadVan = () => {
+const DriveVan = () => {
   const requirements = [
     { id: "id", label: "ID", type: "text", value: "" },
     { id: "tag", label: "Tag", type: "text", value: "" },
-    { id: "barcode", label: "Barcode", type: "number", value: "" },
-    { id: "packages", label: "Packages", type: "number", value: "" }, //I dont know what type package is
-    { id: "price", label: "Price", type: "number", value: "" },
+    { id: "destination", label: "Destination", type: "text", value: "" },
   ];
 
   // Step 2: Initialize state dynamically for each input field
@@ -52,7 +50,7 @@ const LoadVan = () => {
       
       // Makes request
       const response = await axios.post(
-        "http://localhost:8080/van/loadVan",
+        "http://localhost:8080/van/driveVan",
         inputs
       );
 
@@ -71,7 +69,7 @@ const LoadVan = () => {
     } catch (error) {
       setPopup({
         visible: true,
-        message: "Error loading van. Please try again.",
+        message: "Error driving van. Please try again.",
         neutral: false,
       });
 
@@ -80,14 +78,14 @@ const LoadVan = () => {
         setPopup((prev) => ({ ...prev, visible: false }));
       }, 1000);
 
-      console.error("Error loading van:", error);
+      console.error("Error driving van:", error);
     }
   };
 
   return (
     <div className={procedurePagesCss}>
       <div className="h-3/3 w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
-        <h1 className="text-2xl font-bold mb-4">LOAD_VAN()</h1>
+        <h1 className="text-2xl font-bold mb-4">DRIVE_VAN()</h1>
 
         {requirements.map((req) => (
           <div key={req.id} className="mb-6">
@@ -138,4 +136,4 @@ const LoadVan = () => {
   );
 };
 
-export default LoadVan;
+export default DriveVan;

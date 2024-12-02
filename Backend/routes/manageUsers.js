@@ -147,7 +147,7 @@ router.delete("/removeDriver", (req, res) => {
     let data = req.body;
     // Makes skeleton query.
     query =
-      "CALL fire_employee(?, @outputMessage); SELECT @outputMessage AS message;";
+      "CALL remove_driver_role(?, @outputMessage); SELECT @outputMessage AS message;";
     input = [data.username];
     connection.query(query, input, (err, results) => {
       if (!err) {

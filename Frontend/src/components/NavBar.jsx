@@ -4,19 +4,19 @@ import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu";
 import { cn } from "@/lib/utils";
 
 function Navbar({ className }) {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState("Dashboard");
 
   return (
     <div
-      className={cn("fixed top-5 inset-x-0 max-w-4xl mx-auto z-50", className)}
+      className={cn("fixed top-[1vh] inset-x-0 w-fit mx-auto z-50", className)}
     >
       <Menu setActive={setActive}>
         <MenuItem
           setActive={setActive}
-          active={active}
+          active={null}
           item="Dashboard"
           loc="/dashboard"
-        ></MenuItem>
+        />
         <MenuItem
           setActive={setActive}
           active={active}
@@ -42,7 +42,7 @@ function Navbar({ className }) {
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="/addvan">Add Van</HoveredLink>
             <HoveredLink href="/takeovervan">Take Over Van</HoveredLink>
-            <HoveredLink href="/drivervan">Drive Van</HoveredLink>
+            <HoveredLink href="/drivevan">Drive Van</HoveredLink>
             <HoveredLink href="/loadvan">Load Van</HoveredLink>
             <HoveredLink href="/refuelvan">Refuel Van</HoveredLink>
             <HoveredLink href="/removevan">Remove Van</HoveredLink>

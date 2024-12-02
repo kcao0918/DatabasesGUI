@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { mainPagesCss } from "../lib/css";
 
 const UserManagement = () => {
   return (
-    <div className="relative h-screen">
+    <div className={mainPagesCss}>
       <div className="flex flex-col items-center justify-center h-full space-y-8">
         <h1 className="text-3xl font-bold text-black">User Management</h1>
         <div className="grid grid-cols-2 gap-8">

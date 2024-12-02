@@ -1,4 +1,3 @@
-
 -- CS4400: Introduction to Database Systems (Fall 2024)
 -- Project Phase II: Database Schema SOLUTION [v0] Monday, Oct 21, 2024
 set global transaction isolation level serializable;
@@ -315,14 +314,11 @@ sp_main: begin
     -- ensure new owner has a unique username
     if ip_username not in (select username from users) then 
 		insert into users values(ip_username, ip_first_name, ip_last_name, ip_address, ip_birthdate); 
-	end if;
-    
-    if ip_username not in (select username from business_owners) then
 		insert into business_owners value(ip_username);
         set message = "Business Owner created.";
         leave sp_main;
 	end if;
-    set message = "User already a business owner.";
+    set message = "Username already exists.";
 end //
 delimiter ;
 
@@ -468,14 +464,14 @@ sp_main: begin
 		set message = "Error: One or more input parameters are NULL.";
 		leave sp_main;
 	end if;
-    if ip_capacity < 0 or ip_sales < 0 or ip_fuel < 0 then set message = ""; leave sp_main; end if;
+    if ip_capacity < 0 or ip_sales < 0 or ip_fuel < 0 then set message = "Some input is negative"; leave sp_main; end if;
     
     if ip_id not in (select id from delivery_services) then -- not valid delivery service
 		set message = "Delivery service does not exist.";
 		leave sp_main;
         end if;
     
-	if exists(select * from vans v where v.id = ip_id and v.tag = ip_tag) then set message = ""; leave sp_main; end if;
+	if exists(select * from vans v where v.id = ip_id and v.tag = ip_tag) then set message = "Van with tag in service exists"; leave sp_main; end if;
 
     if ip_driven_by not in (select username from drivers) then 
 		set message = "Driver not found.";
@@ -609,7 +605,7 @@ sp_main: begin
     -- ensure that the coordinate combination is distinct
 	if ip_label is null or ip_x_coord is null or ip_y_coord is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
-    if ip_space is not null and ip_space < 0 then set message = ""; leave sp_main; end if;
+    if ip_space is not null and ip_space < 0 then set message = "Space is negative"; leave sp_main; end if;
     
 	if ip_label in (select label from locations) then
 		set message = "Location name already exists";
@@ -640,7 +636,7 @@ sp_main: begin
 	-- ensure the owner and business are valid
     if ip_owner is null or ip_long_name is null or ip_fund_date is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
-    if ip_amount is not null and ip_amount < 0 then set message = ""; leave sp_main; end if;
+    if ip_amount is not null and ip_amount < 0 then set message = "Funding is negative"; leave sp_main; end if;
     
 	if ip_owner not in (select username from business_owners) then
 		set message = "User not a owner.";
@@ -778,7 +774,7 @@ sp_main: begin
     -- ensure that the employee is a valid driver
     if ip_id is null or ip_tag is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
 	
-    if not exists (select 1 from vans where ip_id=id and tag=ip_tag) then set message = ""; leave sp_main; end if;
+    if not exists (select 1 from vans where ip_id=id and tag=ip_tag) then set message = "Van does not exist"; leave sp_main; end if;
 -- ensure that the driver is not driving for another service
 	if ip_username is null then
 		    update vans v
@@ -826,7 +822,7 @@ sp_main: begin
     
     if ip_id is null or ip_tag is null or ip_barcode is null or ip_more_packages is null or ip_price is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
-    if not exists (select 1 from vans where ip_id = id and ip_tag = tag) then set message = ""; leave sp_main;
+    if not exists (select 1 from vans where ip_id = id and ip_tag = tag) then set message = "Van does not exist"; leave sp_main;
 	elseif ip_barcode not in (select barcode from products) then -- ensure that the product is valid
 		set message = "Barcode not found"; leave sp_main;
 	elseif (select located_at from vans where tag = ip_tag and id = ip_id) != (select home_base from delivery_services where id = ip_id) then -- ensure that the van is located at the service home base
@@ -1087,7 +1083,7 @@ sp_main: begin
 	-- ensure that the driver exists
     -- ensure that the driver is not controlling any vans
     -- remove all remaining information
-    if ip_username is null then set message = "Error: One or more input parameters are NULL."; set message = ""; leave sp_main; end if;
+    if ip_username is null then set message = "Error: One or more input parameters are NULL."; leave sp_main; end if;
     
 	if ip_username not in (select username from drivers) then
 		set message = "Driver not found"; leave sp_main;

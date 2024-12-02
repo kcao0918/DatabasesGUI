@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { procedurePagesCss } from "../lib/css";
 
 const LocationView = () => {
   const [view, setView] = useState();
@@ -22,8 +23,8 @@ const LocationView = () => {
   };
 
   return (
-    <div className="mt-40 flex justify-center min-h-screen bg-white">
-      <div className="h-4/5 w-3/4 p-6 rounded-lg border border-black bg-white text-black shadow-lg overflow-hidden">
+    <div className={procedurePagesCss}>
+      <div className="h-4/5 w-3/4 p-6 rounded-lg border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)] overflow-hidden">
         <h1 className="text-2xl font-bold mb-4 text-center">Location View</h1>
   
         <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg shadow-md overflow-auto p-4">
