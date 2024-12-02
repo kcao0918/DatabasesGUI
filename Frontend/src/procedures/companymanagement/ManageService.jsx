@@ -6,6 +6,7 @@ const ManageService = () => {
   // Step 1: Define the array of requirements
   const requirements = [
     { id: "username", label: "Username", type: "text", value: "" },
+    { id: "id", label: "ID", type: "text", value: "" },
   ];
 
   // Step 2: Initialize state dynamically for each input field

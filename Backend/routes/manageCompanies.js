@@ -74,8 +74,8 @@ router.post("/manageService", (req, res) => {
   let data = req.body;
   // Makes skeleton query.
   query =
-    "CALL manage_service(?, @outputMessage); SELECT @outputMessage AS message;";
-  input = [data.username];
+    "CALL manage_service(?, ?, @outputMessage); SELECT @outputMessage AS message;";
+  input = [data.username, data.id];
   connection.query(query, input, (err, results) => {
     if (!err) {
       const outputMessage = results[1][0].message;

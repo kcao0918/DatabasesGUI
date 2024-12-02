@@ -46,7 +46,7 @@ const RemoveProduct = () => {
       // Makes request
       const response = await axios.delete(
         "http://localhost:8080/user/removeProduct",
-        inputs
+        { data: inputs }
       );
 
       // Prints message on console. TODO: Display

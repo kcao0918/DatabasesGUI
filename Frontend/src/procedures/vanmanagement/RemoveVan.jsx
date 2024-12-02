@@ -45,7 +45,7 @@ const RemoveVan = () => {
         return;
       }
       // Makes request
-      const response = await axios.post(
+      const response = await axios.delete(
         "http://localhost:8080/user/removeVan",
         { data: inputs }
       );
