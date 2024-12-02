@@ -20,7 +20,7 @@ export const MenuItem = ({ setActive, active, item, children, loc }) => {
     <div
       onMouseEnter={() => setActive(item)}
       onClick={() => setActive(item)} // Set the active state on click
-      className="relative flex items-center justify-center"
+      className="relative"
     >
       <Link to={loc}>
         <motion.p
@@ -74,7 +74,7 @@ export const Menu = ({ setActive, children }) => {
     <nav
       onMouseLeave={() => setActive(null)}
       // changes styling of navbar itself
-      className="relative border font-outfit font-medium border-transparent bg-[#1B4D44] shadow-input flex justify-center space-x-4 px-8 py-6 h-[calc(10vh)]"
+      className="relative rounded-full border border-transparent font-outfit font-medium dark:bg-black dark:border-white/[0.2] bg-[#1B4D44] shadow-input flex justify-center space-x-4 px-8 py-6 h-[calc(9vh)]"
     >
       {children}
     </nav>
