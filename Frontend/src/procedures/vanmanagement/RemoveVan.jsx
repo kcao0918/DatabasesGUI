@@ -49,7 +49,7 @@ const RemoveVan = () => {
       
       // Makes request
       const response = await axios.delete(
-        "http://localhost:8080/user/removeVan",
+        "http://localhost:8080/van/removeVan",
         { data: inputs }
       );
 
@@ -62,7 +62,7 @@ const RemoveVan = () => {
       // Automatically hide the popup after 3 seconds
       setTimeout(() => {
         setPopup((prev) => ({ ...prev, visible: false }));
-      }, 2000);
+      }, 1000);
 
       console.log(response.data);
     } catch (error) {
@@ -75,7 +75,7 @@ const RemoveVan = () => {
       // Automatically hide the popup after 3 seconds
       setTimeout(() => {
         setPopup((prev) => ({ ...prev, visible: false }));
-      }, 3000);
+      }, 1000);
 
       console.error("Error removing van:", error);
     }

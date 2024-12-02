@@ -57,7 +57,7 @@ const AddBusiness = () => {
       
       // Makes request
       const response = await axios.post(
-        "http://localhost:8080/user/addBusiness",
+        "http://localhost:8080/company/addBusiness",
         inputs
       );
 
@@ -70,7 +70,7 @@ const AddBusiness = () => {
       // Automatically hide the popup after 3 seconds
       setTimeout(() => {
         setPopup((prev) => ({ ...prev, visible: false }));
-      }, 2000);
+      }, 1000);
 
       console.log(response.data);
     } catch (error) {
@@ -83,7 +83,7 @@ const AddBusiness = () => {
       // Automatically hide the popup after 3 seconds
       setTimeout(() => {
         setPopup((prev) => ({ ...prev, visible: false }));
-      }, 3000);
+      }, 1000);
 
       console.error("Error adding business:", error);
     }

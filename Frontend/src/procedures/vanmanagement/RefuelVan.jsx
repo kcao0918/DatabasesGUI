@@ -50,7 +50,7 @@ const RefuelVan = () => {
       
       // Makes request
       const response = await axios.post(
-        "http://localhost:8080/user/refuelVan",
+        "http://localhost:8080/van/refuelVan",
         inputs
       );
 
@@ -63,7 +63,7 @@ const RefuelVan = () => {
       // Automatically hide the popup after 3 seconds
       setTimeout(() => {
         setPopup((prev) => ({ ...prev, visible: false }));
-      }, 2000);
+      }, 1000);
 
       console.log(response.data);
     } catch (error) {
@@ -76,7 +76,7 @@ const RefuelVan = () => {
       // Automatically hide the popup after 3 seconds
       setTimeout(() => {
         setPopup((prev) => ({ ...prev, visible: false }));
-      }, 3000);
+      }, 1000);
 
       console.error("Error refueling van:", error);
     }
