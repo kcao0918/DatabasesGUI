@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { procedurePagesCss } from "../../lib/css";
 
 const HireEmployee = () => {
   const requirements = [
@@ -57,7 +58,7 @@ const HireEmployee = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-[#F3F1E5]">
+    <div className={procedurePagesCss}>
       <div className="h-3/3 w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
         <h1 className="text-2xl font-bold mb-4">HIRE_EMPLOYEE()</h1>
 

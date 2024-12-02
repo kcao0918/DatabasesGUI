@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { procedurePagesCss } from "../lib/css";
 
 const ServiceView = () => {
   const [view, setView] = useState();

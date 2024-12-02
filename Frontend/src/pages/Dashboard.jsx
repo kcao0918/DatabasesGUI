@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { mainPagesCss } from "../lib/css";
 
 function Dashboard() {
   return (
-    <div className="relative h-[90vh] top-[10vh] bg-[#F3F1E5]">
+    <div className={mainPagesCss}>
       <div className="flex flex-col items-center justify-center h-full space-y-8">
         <h1 className="text-5xl font-bold text-black">
           Business Supply Management
