@@ -20,6 +20,12 @@ const PurchaseProduct = () => {
     }, {})
   );
 
+  const [popup, setPopup] = useState({
+    visible: false,
+    message: "",
+    neutral: true,
+  });
+
   // Step 3: Handle input change
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -44,20 +50,38 @@ const PurchaseProduct = () => {
     e.preventDefault();
     try {
       console.log(inputs);
-      // Checks if all inputs are given
-      if (Object.values(inputs).some((value) => value === "")) {
-        return;
-      }
+      
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/user/purchaseProduct",
         inputs
       );
 
-      // Prints message on console. TODO: Display
+      setPopup({
+        visible: true,
+        message: response.data.message,
+        neutral: true,
+      });
+
+      // Automatically hide the popup after 3 seconds
+      setTimeout(() => {
+        setPopup((prev) => ({ ...prev, visible: false }));
+      }, 2000);
+
       console.log(response.data);
     } catch (error) {
-      console.error("Error adding user:", error);
+      setPopup({
+        visible: true,
+        message: "Error purchasing product. Please try again.",
+        neutral: false,
+      });
+
+      // Automatically hide the popup after 3 seconds
+      setTimeout(() => {
+        setPopup((prev) => ({ ...prev, visible: false }));
+      }, 3000);
+
+      console.error("Error purchasing product:", error);
     }
   };
 
@@ -102,6 +126,16 @@ const PurchaseProduct = () => {
           </button>
         </div>
       </div>
+
+      {popup.visible && (
+        <div className="fixed inset-0 flex items-start justify-center z-50 pt-[10vh]">
+          <div
+            className={`p-4 rounded-md shadow-md text-center bg-gray-100 text-gray-700`}
+          >
+            <p className="text-lg">{popup.message}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -64,7 +64,7 @@ const AddDriver = () => {
         setPopup((prev) => ({ ...prev, visible: false }));
       }, 2000);
 
-      console.log(response.data.message);
+      console.log(response.data);
     } catch (error) {
       setPopup({
         visible: true,
@@ -77,7 +77,7 @@ const AddDriver = () => {
         setPopup((prev) => ({ ...prev, visible: false }));
       }, 3000);
 
-      console.error("Error adding user:", error);
+      console.error("Error adding driver:", error);
     }
   };
 
