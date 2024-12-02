@@ -7,9 +7,7 @@ function Navbar({ className }) {
   const [active, setActive] = useState("Dashboard");
 
   return (
-    <div
-      className={cn("fixed top-[1vh] inset-x-0 w-fit mx-auto z-50", className)}
-    >
+    <div className={cn("fixed inset-x-0 mx-auto z-50", className)}>
       <Menu setActive={setActive}>
         <MenuItem
           setActive={setActive}
