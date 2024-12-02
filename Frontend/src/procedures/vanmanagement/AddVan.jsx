@@ -1,9 +1,12 @@
 import { useState } from "react";
+import axios from "axios";
+import { procedurePagesCss } from "../../lib/css";
 
 const AddVan = () => {
   const requirements = [
     { id: "id", label: "ID", type: "text", value: "" },
     { id: "tag", label: "Tag", type: "text", value: "" },
+    { id: "driver", label: "Driver", type: "text", value: "" },
     {
       id: "fuel",
       label: "Fuel",
@@ -12,7 +15,7 @@ const AddVan = () => {
     },
     { id: "capacity", label: "Capacity", type: "number", value: "" },
     { id: "sales", label: "Sales", type: "number", value: "" },
-    { id: "driver", label: "Driver", type: "text", value: "" },
+    
   ];
 
   // Step 2: Initialize state dynamically for each input field
@@ -65,7 +68,7 @@ const AddVan = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-[#F3F1E5]">
+    <div className={procedurePagesCss}>
       <div className="h-3/3 w-1/3 p-6 rounded-md border border-black bg-white text-black shadow-[4px_4px_0px_0px_rgba(0,0,0)]">
         <h1 className="text-2xl font-bold mb-4">ADD_VAN()</h1>
 
@@ -97,7 +100,9 @@ const AddVan = () => {
           >
             CLEAR
           </button>
-          <button className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+          <button
+            onClick={handleSubmit} // Call handleSubmit when clicked
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
             CONFIRM
           </button>
         </div>

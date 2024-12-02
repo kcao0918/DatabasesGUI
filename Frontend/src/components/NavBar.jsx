@@ -40,7 +40,7 @@ function Navbar({ className }) {
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="/addvan">Add Van</HoveredLink>
             <HoveredLink href="/takeovervan">Take Over Van</HoveredLink>
-            <HoveredLink href="/drivervan">Drive Van</HoveredLink>
+            <HoveredLink href="/drivevan">Drive Van</HoveredLink>
             <HoveredLink href="/loadvan">Load Van</HoveredLink>
             <HoveredLink href="/refuelvan">Refuel Van</HoveredLink>
             <HoveredLink href="/removevan">Remove Van</HoveredLink>

@@ -39,9 +39,9 @@ const VanManagement = () => {
           </Link>
           <Link
             className="text-3xl font-semibold px-4 py-2 text-center rounded-md border border-black bg-white text-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200 cursor-pointer"
-            to="/drivervan"
+            to="/drivevan"
           >
-            DRIVER VAN
+            DRIVE VAN
           </Link>
         </div>
       </div>
