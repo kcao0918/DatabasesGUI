@@ -26,9 +26,7 @@ export const MenuItem = ({ setActive, active, item, children, loc }) => {
         <motion.p
           transition={{ duration: 0.3 }}
           className={`cursor-pointer font-semibold hover:opacity-[0.7] ${
-            isActive
-              ? "text-green-400 border-green-400"
-              : "text-[#AABF96]"
+            isActive ? "text-green-400 border-green-400" : "text-neutral-200"
           }`}
         >
           {item}
@@ -42,12 +40,12 @@ export const MenuItem = ({ setActive, active, item, children, loc }) => {
         >
           {active === item && (
             // changes padding and bg of "active"
-            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4 bg-gray-800">
+            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-2">
               <motion.div
                 transition={transition}
                 layoutId="active"
                 // changes "active" menu styling
-                className="bg-slate-500 backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl"
+                className="bg-[#1B4D44] backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl"
               >
                 <motion.div layout className="w-max h-full p-4">
                   {children}
@@ -74,7 +72,7 @@ export const Menu = ({ setActive, children }) => {
     <nav
       onMouseLeave={() => setActive(null)}
       // changes styling of navbar itself
-      className="relative rounded-full !rounded-br-none border border-transparent bg-[#1B4D44] shadow-input flex justify-center space-x-4 px-8 py-6"
+      className="relative rounded-full border border-transparent bg-[#1B4D44] shadow-input flex justify-center space-x-4 px-8 py-6"
     >
       {children}
     </nav>
@@ -88,11 +86,7 @@ Menu.propTypes = {
 
 export const HoveredLink = ({ children, href, ...rest }) => {
   return (
-    <Link
-      to={href}
-      {...rest}
-      className="text-neutral-200 hover:text-black"
-    >
+    <Link to={href} {...rest} className="text-neutral-200 hover:text-green-400">
       {children}
     </Link>
   );

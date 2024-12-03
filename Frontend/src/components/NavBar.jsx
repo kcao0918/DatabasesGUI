@@ -8,7 +8,10 @@ function Navbar({ className }) {
 
   return (
     <div
-      className={cn("fixed top-[1vh] inset-x-0 w-fit mx-auto z-50", className)}
+      className={cn(
+        "fixed top-[1vh] inset-x-0 w-[70vw] mx-auto z-50",
+        className
+      )}
     >
       <Menu setActive={setActive}>
         <MenuItem
