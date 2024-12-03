@@ -47,7 +47,7 @@ export const MenuItem = ({ setActive, active, item, children, loc }) => {
                 transition={transition}
                 layoutId="active"
                 // changes "active" menu styling
-                className="bg-slate-500 backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
+                className="bg-slate-500 backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl"
               >
                 <motion.div layout className="w-max h-full p-4">
                   {children}
@@ -74,7 +74,7 @@ export const Menu = ({ setActive, children }) => {
     <nav
       onMouseLeave={() => setActive(null)}
       // changes styling of navbar itself
-      className="relative rounded-full !rounded-br-none border border-transparent dark:bg-black dark:border-white/[0.2] bg-[#1B4D44] shadow-input flex justify-center space-x-4 px-8 py-6"
+      className="relative rounded-full !rounded-br-none border border-transparent bg-[#1B4D44] shadow-input flex justify-center space-x-4 px-8 py-6"
     >
       {children}
     </nav>
@@ -91,7 +91,7 @@ export const HoveredLink = ({ children, href, ...rest }) => {
     <Link
       to={href}
       {...rest}
-      className="text-neutral-700 dark:text-neutral-200 hover:text-black"
+      className="text-neutral-200 hover:text-black"
     >
       {children}
     </Link>

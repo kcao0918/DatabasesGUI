@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import LoadingCat from "./loading/LoadingCat";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserMangement from "./pages/UserMangement";
@@ -49,6 +51,24 @@ import {
 } from "./views";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000); // Display the loading animation for 3 seconds
+
+    return () => clearTimeout(timer); // Cleanup timer
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-[#F3F1E5]">
+        <LoadingCat />
+      </div>
+    );
+  }
+
   return (
     <div>
       <BrowserRouter>
