@@ -8,9 +8,9 @@ const AddEmployee = () => {
     { id: "taxID", label: "Tax ID", type: "text", value: "" },
     { id: "fname", label: "First Name", type: "text", value: "" },
     { id: "lname", label: "Last Name", type: "text", value: "" },
-    { id: "bdate", label: "Birthday", type: "text", value: "" },
+    { id: "bdate", label: "Birthday", type: "date", value: "" },
     { id: "address", label: "Address", type: "text", value: "" },
-    { id: "hired", label: "Hired Date", type: "text", value: "" },
+    { id: "hired", label: "Hired Date", type: "date", value: "" },
     {
       id: "experience",
       label: "Work Experience (in years)",

@@ -6,7 +6,7 @@ const AddOwner = () => {
   // Step 1: Define the array of requirements
   const requirements = [
     { id: "username", label: "Username", type: "text", value: "" },
-    { id: "bdate", label: "Birthday", type: "text", value: "" },
+    { id: "bdate", label: "Birthday", type: "date", value: "" },
     { id: "fname", label: "First Name", type: "text", value: "" },
     { id: "lname", label: "Last Name", type: "text", value: "" },
     { id: "address", label: "Address", type: "text", value: "" },
