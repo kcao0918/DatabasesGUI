@@ -45,13 +45,19 @@ const TakeoverVan = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
+
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/van/takeoverVan",
-        inputs
+        processedInputs
       );
 
       setPopup({
