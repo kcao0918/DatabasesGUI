@@ -5,7 +5,7 @@ import { procedurePagesCss } from "../../lib/css";
 const AddVan = () => {
   const requirements = [
     { id: "id", label: "ID", type: "text", value: "" },
-    { id: "tag", label: "Tag", type: "text", value: "" },
+    { id: "tag", label: "Tag", type: "number", value: "" },
     { id: "driver", label: "Driver", type: "text", value: "" },
     {
       id: "fuel",
@@ -15,7 +15,6 @@ const AddVan = () => {
     },
     { id: "capacity", label: "Capacity", type: "number", value: "" },
     { id: "sales", label: "Sales", type: "number", value: "" },
-    
   ];
 
   // Step 2: Initialize state dynamically for each input field
@@ -54,13 +53,18 @@ const AddVan = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/van/addVan",
-        inputs
+        processedInputs
       );
 
       setPopup({
@@ -126,7 +130,8 @@ const AddVan = () => {
           </button>
           <button
             onClick={handleSubmit} // Call handleSubmit when clicked
-            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500"
+          >
             CONFIRM
           </button>
         </div>

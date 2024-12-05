@@ -6,8 +6,8 @@ const FundBusiness = () => {
   const requirements = [
     { id: "username", label: "Username", type: "text", value: "" },
     { id: "amount", label: "Amount", type: "number", value: "" },
-    { id: "name", label: "Name", type: "text", value: "" },
-    { id: "date", label: "Date", type: "text", value: "" },
+    { id: "name", label: "Business Name", type: "text", value: "" },
+    { id: "date", label: "Date", type: "date", value: "" },
   ];
 
   // Step 2: Initialize state dynamically for each input field
@@ -46,13 +46,18 @@ const FundBusiness = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/company/fundBusiness",
-        inputs
+        processedInputs
       );
 
       setPopup({

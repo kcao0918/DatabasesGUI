@@ -5,7 +5,7 @@ import { procedurePagesCss } from "../../lib/css";
 const DriveVan = () => {
   const requirements = [
     { id: "id", label: "ID", type: "text", value: "" },
-    { id: "tag", label: "Tag", type: "text", value: "" },
+    { id: "tag", label: "Tag", type: "number", value: "" },
     { id: "destination", label: "Destination", type: "text", value: "" },
   ];
 
@@ -45,13 +45,18 @@ const DriveVan = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/van/driveVan",
-        inputs
+        processedInputs
       );
 
       setPopup({
@@ -115,9 +120,10 @@ const DriveVan = () => {
           >
             CLEAR
           </button>
-          <button 
+          <button
             onClick={handleSubmit} // Call handleSubmit when clicked
-            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500">
+            className="font-semibold px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 duration-500"
+          >
             CONFIRM
           </button>
         </div>

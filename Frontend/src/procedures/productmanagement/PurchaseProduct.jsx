@@ -7,8 +7,8 @@ const PurchaseProduct = () => {
   const requirements = [
     { id: "business", label: "Business", type: "text", value: "" },
     { id: "id", label: "ID", type: "text", value: "" },
-    { id: "tag", label: "Tag", type: "text", value: "" },
-    { id: "barcode", label: "Barcode", type: "number", value: "" },
+    { id: "tag", label: "Tag", type: "number", value: "" },
+    { id: "barcode", label: "Barcode", type: "text", value: "" },
     { id: "quantity", label: "Quantity", type: "number", value: "" },
   ];
 
@@ -48,13 +48,18 @@ const PurchaseProduct = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/product/purchaseProduct",
-        inputs
+        processedInputs
       );
 
       setPopup({

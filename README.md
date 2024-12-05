@@ -30,8 +30,11 @@ Before you begin, make sure you have the following installed:
 
 ## How to run
 
+Make sure you cd into the Backend folder first.
+
 To run the backend server, make sure to have the MySQL database running
 under Backend/business_supply.sql then type the commend:
 ` npm start`
 
+Makes sure you cd into the Frontend folder first.
 To start the Frontend server, `npm run` or ` npm run dev`

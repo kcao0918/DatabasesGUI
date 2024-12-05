@@ -4,7 +4,7 @@ import { procedurePagesCss } from "../../lib/css";
 const RemoveProduct = () => {
   // Step 1: Define the array of requirements
   const requirements = [
-    { id: "barcode", label: "Barcode", type: "number", value: "" },
+    { id: "barcode", label: "Barcode", type: "text", value: "" },
   ];
 
   // Step 2: Initialize state dynamically for each input field
@@ -43,13 +43,18 @@ const RemoveProduct = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
       // Makes request
       const response = await axios.delete(
         "http://localhost:8080/product/removeProduct",
-        { data: inputs }
+        { data: processedInputs }
       );
 
       setPopup({

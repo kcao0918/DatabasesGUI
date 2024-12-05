@@ -50,7 +50,7 @@ const AddDriver = () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/user/addDriver",
-        inputs
+        processedInputs
       );
 
       setPopup({

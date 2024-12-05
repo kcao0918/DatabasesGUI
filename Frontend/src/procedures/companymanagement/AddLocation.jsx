@@ -6,14 +6,14 @@ const AddLocation = () => {
   // Step 1: Define the array of requirements
   const requirements = [
     { id: "name", label: "Name", type: "text", value: "" },
-    { id: "xCord", label: "X-Coordinate", type: "text", value: "" },
+    { id: "xCord", label: "X-Coordinate", type: "number", value: "" },
     {
       id: "yCord",
       label: "Y-Coordinate",
       type: "number",
       value: "",
     },
-    { id: "space", label: "Space", type: "text", value: "" },
+    { id: "space", label: "Space", type: "number", value: "" },
   ];
 
   // Step 2: Initialize state dynamically for each input field
@@ -52,13 +52,18 @@ const AddLocation = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/company/addLocation",
-        inputs
+        processedInputs
       );
 
       setPopup({

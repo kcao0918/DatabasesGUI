@@ -5,7 +5,7 @@ import { procedurePagesCss } from "../../lib/css";
 const AddProduct = () => {
   // Step 1: Define the array of requirements
   const requirements = [
-    { id: "barcode", label: "Barcode", type: "number", value: "" },
+    { id: "barcode", label: "Barcode", type: "text", value: "" },
     { id: "name", label: "Product Name", type: "text", value: "" },
     { id: "weight", label: "Weight", type: "number", value: "" },
   ];
@@ -46,13 +46,18 @@ const AddProduct = () => {
   // Handles submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
-      console.log(inputs);
-      
+      console.log(processedInputs);
       // Makes request
       const response = await axios.post(
         "http://localhost:8080/product/addProduct",
-        inputs
+        processedInputs
       );
 
       setPopup({

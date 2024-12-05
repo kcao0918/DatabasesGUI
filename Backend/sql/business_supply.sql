@@ -1199,6 +1199,17 @@ natural join vans v
 group by p.iname, v.located_at, c.quantity
 order by p.iname;
 
+-- select p.iname as product_name,
+-- v.located_at as location,
+-- sum(c.quantity) as amount_available,
+-- min(c.price) as low_price,
+-- max(c.price) as high_price
+-- from products p
+-- natural join contain c
+-- natural join vans v
+-- group by p.iname, v.located_at
+-- order by p.iname;
+
 -- [27] display_service_view()
 -- -----------------------------------------------------------------------------
 /* This view displays information in the system from the perspective of a delivery
