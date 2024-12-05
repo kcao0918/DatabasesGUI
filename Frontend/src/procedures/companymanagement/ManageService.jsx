@@ -55,7 +55,7 @@ const ManageService = () => {
       console.log(processedInputs);
       // Makes request
       const response = await axios.post(
-        "http://localhost:8080/company/fundBusiness",
+        "http://localhost:8080/company/manageService",
         processedInputs
       );
 
