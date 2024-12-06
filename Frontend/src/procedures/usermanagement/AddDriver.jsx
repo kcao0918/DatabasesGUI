@@ -47,6 +47,12 @@ const AddDriver = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const processedInputs = Object.fromEntries(
+      Object.entries(inputs).map(([key, value]) => [
+        key,
+        value === "" ? null : value,
+      ])
+    );
     try {
       const response = await axios.post(
         "http://localhost:8080/user/addDriver",
